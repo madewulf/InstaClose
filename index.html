@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+</head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+<script>
+$(function (){
+    navigator.geolocation.getCurrentPosition(function(data){
+    var longitude = data.coords.longitude;
+    var latitude = data.coords.latitude;
+    var url = "https://api.instagram.com/v1/media/search?distance=500&lat="+latitude+"&lng="+longitude+"&client_id=fbba4c3353bf493eaeb6e3c17efa0dc0&callback=?";
+    $.getJSON(url,
+    function(response)
+    {
+        var data = response.data;
+        var body = $("body");
+        for (var i=0;i<data.length;i++)
+        {
+            var pic = data[i];
+            var pic_url = pic.images.standard_resolution.url;
+            body.append('<img src="'+pic_url+'"/>');
+        }
+    });
+    });
+});
+</script>
+
+<body>
+
+</body>
+</html>
